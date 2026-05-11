@@ -410,3 +410,247 @@
 .fast-animations {
   --global-speed: 0.7;
 }
+
+/* ========== MOBILE-SPECIFIC ANIMATIONS ========== */
+
+/* Mobile entrance animations */
+@keyframes mobile-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes mobile-fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes mobile-scale-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes mobile-slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes mobile-slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes mobile-float-bounce {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes mobile-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 15px 0px rgba(184, 134, 11, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 25px 5px rgba(184, 134, 11, 0.4);
+  }
+}
+
+@keyframes scroll-in-trigger {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile utility animation classes */
+.animate-mobile-slide-down {
+  animation: mobile-slide-down 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.animate-mobile-fade-in-up {
+  animation: mobile-fade-in-up 0.5s ease-out;
+}
+
+.animate-mobile-scale-pop {
+  animation: mobile-scale-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.animate-mobile-float-bounce {
+  animation: mobile-float-bounce 2.5s ease-in-out infinite;
+}
+
+.animate-mobile-glow-pulse {
+  animation: mobile-glow-pulse 2s ease-in-out infinite;
+}
+
+/* Scroll-triggered animation (will be controlled by observer in React) */
+.scroll-animate-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.scroll-animate-in.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Mobile stagger variants - tighter timing for mobile */
+.stagger-item-mobile {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: scroll-in-trigger 0.5s ease-out backwards;
+}
+
+.stagger-item-mobile:nth-child(1) { animation-delay: 0s; }
+.stagger-item-mobile:nth-child(2) { animation-delay: 0.1s; }
+.stagger-item-mobile:nth-child(3) { animation-delay: 0.2s; }
+.stagger-item-mobile:nth-child(4) { animation-delay: 0.3s; }
+.stagger-item-mobile:nth-child(5) { animation-delay: 0.4s; }
+.stagger-item-mobile:nth-child(6) { animation-delay: 0.5s; }
+
+/* ========== TOUCH-FRIENDLY EFFECTS ========== */
+
+/* Alternative to hover effects for touch devices */
+@media (hover: none) and (pointer: coarse) {
+  /* Remove hover effects on touch devices */
+  .hover-scale:hover,
+  .hover-glow:hover,
+  .hover-lift:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Add touch-friendly active states instead */
+  .hover-scale:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
+
+  .hover-glow:active {
+    box-shadow: var(--shadow-glow);
+    transform: scale(0.98);
+  }
+
+  .hover-lift:active {
+    transform: scale(0.98);
+    box-shadow: 0 10px 20px -10px color-mix(in oklab, var(--espresso) 20%, transparent);
+  }
+
+  /* Button glow active state for touch */
+  .btn-glow:active {
+    box-shadow: 0 0 25px 3px rgba(184, 134, 11, 0.3);
+    transform: scale(0.98);
+  }
+}
+
+/* On hover-capable devices, keep original effects */
+@media (hover: hover) {
+  .hover-scale:hover {
+    transform: translateY(-3px);
+  }
+
+  .hover-glow:hover {
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-4px);
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px -10px color-mix(in oklab, var(--espresso) 30%, transparent);
+  }
+
+  .btn-glow:hover {
+    box-shadow: 0 0 30px 5px rgba(184, 134, 11, 0.4);
+    transform: translateY(-2px);
+  }
+}
+
+/* ========== MOBILE OPTIMIZATION ========== */
+
+@media (max-width: 768px) {
+  /* Reduce animation duration on mobile for snappier feel */
+  :root {
+    --anim-fast: 0.25s;
+    --anim-normal: 0.5s;
+    --anim-slow: 0.8s;
+  }
+
+  /* Disable heavy parallax on mobile */
+  .parallax-element {
+    will-change: auto;
+  }
+
+  /* Optimize float animation for mobile */
+  .animate-float {
+    animation: mobile-float-bounce 2.5s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: mobile-float-bounce 3s ease-in-out infinite 0.3s;
+  }
+
+  /* Ensure touch targets are large enough (44-48px minimum) */
+  button, a[role="button"], .btn-glow {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Reduce blur effects on mobile for performance */
+  .glass {
+    backdrop-filter: blur(5px);
+  }
+
+  .glass-dark {
+    backdrop-filter: blur(5px);
+  }
+
+  /* Mobile-specific text rendering */
+  body {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Optimize stagger for mobile */
+  .stagger-item:nth-child(1) { animation-delay: 0s; }
+  .stagger-item:nth-child(2) { animation-delay: 0.1s; }
+  .stagger-item:nth-child(3) { animation-delay: 0.2s; }
+  .stagger-item:nth-child(4) { animation-delay: 0.3s; }
+  .stagger-item:nth-child(5) { animation-delay: 0.4s; }
+  .stagger-item:nth-child(6) { animation-delay: 0.5s; }
+}

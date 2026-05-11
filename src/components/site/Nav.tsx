@@ -66,14 +66,15 @@ export function Nav() {
       </div>
 
       {open && (
-        <div className="md:hidden border-t border-border bg-background/95 backdrop-blur">
+        <div className="md:hidden border-t border-border bg-background/95 backdrop-blur animate-mobile-slide-down">
           <div className="px-6 py-6 flex flex-col gap-5">
-            {links.map((l) => (
+            {links.map((l, idx) => (
               <a
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="text-base text-foreground/80"
+                className="text-base text-foreground/80 stagger-item-mobile"
+                style={{ animationDelay: `${idx * 50}ms` }}
               >
                 {l.label}
               </a>

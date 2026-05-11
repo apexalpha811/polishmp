@@ -1,5 +1,6 @@
 import { Check, Sparkles, ArrowRight } from "lucide-react";
 import { useReveal } from "@/hooks/use-reveal";
+import { useScrollAnimationElements } from "@/hooks/use-scroll-animation";
 import { useState } from "react";
 
 const tiers = [
@@ -47,6 +48,7 @@ const tiers = [
 export function Pricing() {
   const ref = useReveal<HTMLDivElement>();
   const [selectedTier, setSelectedTier] = useState<number | null>(1);
+  useScrollAnimationElements();
 
   return (
     <section id="pricing" className="relative py-24 lg:py-32 overflow-hidden">
@@ -77,7 +79,7 @@ export function Pricing() {
           {tiers.map((t, idx) => (
             <article
               key={t.name}
-              className="stagger-item group relative"
+              className="stagger-item scroll-animate-in group relative"
               onMouseEnter={() => setSelectedTier(idx)}
               onMouseLeave={() => setSelectedTier(null)}
             >
@@ -93,7 +95,7 @@ export function Pricing() {
 
               {/* Card */}
               <div
-                className={`relative rounded-3xl p-8 lg:p-10 flex flex-col h-full overflow-hidden transition-all duration-300 ${
+                className={`relative rounded-3xl p-6 sm:p-8 lg:p-10 flex flex-col h-full overflow-hidden transition-all duration-300 ${
                   t.highlight
                     ? "bg-gradient-to-br from-foreground to-foreground/95 text-background border border-foreground/20 hover-lift"
                     : "bg-gradient-to-br from-card to-card/50 border border-border/50 hover-lift hover:border-primary/30"

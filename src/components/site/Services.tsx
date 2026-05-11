@@ -1,5 +1,6 @@
 import { Sparkles, Flower2, Brush, Gem, Droplets, Leaf, ArrowRight } from "lucide-react";
 import { useReveal } from "@/hooks/use-reveal";
+import { useScrollAnimationElements } from "@/hooks/use-scroll-animation";
 import { useState } from "react";
 
 const services = [
@@ -14,6 +15,7 @@ const services = [
 export function Services() {
   const ref = useReveal<HTMLDivElement>();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  useScrollAnimationElements();
 
   return (
     <section id="services" className="relative py-24 lg:py-32 overflow-hidden">
@@ -44,12 +46,12 @@ export function Services() {
           {services.map(({ icon: Icon, title, desc, duration, price }, idx) => (
             <article
               key={title}
-              className="stagger-item group relative"
+              className="stagger-item scroll-animate-in group relative"
               onMouseEnter={() => setHoveredIndex(idx)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
               {/* Card background with hover effect */}
-              <div className="relative rounded-3xl border border-border/50 bg-gradient-to-br from-card to-card/50 p-8 overflow-hidden hover-lift h-full transition-all duration-300">
+              <div className="relative rounded-3xl border border-border/50 bg-gradient-to-br from-card to-card/50 p-6 sm:p-8 overflow-hidden hover-lift h-full transition-all duration-300">
                 {/* Hover background gradient */}
                 <div className={`absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
 

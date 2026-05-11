@@ -4,20 +4,40 @@ import { Phone, Sparkles, ArrowRight } from "lucide-react";
 
 export function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [scrollPosition, setScrollPosition] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
     setIsVisible(true);
+
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth - 0.5) * 20,
-        y: (e.clientY / window.innerHeight - 0.5) * 20,
-      });
+      if (!isMobile) {
+        setMousePosition({
+          x: (e.clientX / window.innerWidth - 0.5) * 20,
+          y: (e.clientY / window.innerHeight - 0.5) * 20,
+        });
+      }
+    };
+
+    const handleScroll = () => {
+      setScrollPosition(window.scrollY);
+    };
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [isMobile]);
 
   return (
     <section
@@ -53,7 +73,7 @@ export function Hero() {
               transition: "all 0.9s cubic-bezier(0.2, 0.7, 0.2, 1)",
             }}
           >
-            <h1 className="font-serif text-6xl sm:text-7xl lg:text-8xl leading-[0.95] tracking-tight">
+            <h1 className="font-serif text-5xl sm:text-6xl lg:text-8xl leading-[0.95] tracking-tight">
               <span className="block text-foreground">Where craft</span>
               <span className="block bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-gradient-shift">
                 becomes art
@@ -151,8 +171,10 @@ export function Hero() {
           <div
             className="relative aspect-[4/5] rounded-[2.5rem] overflow-hidden hover-lift"
             style={{
-              transform: `perspective(1200px) rotateX(${mousePosition.y * 0.5}deg) rotateY(${mousePosition.x * -0.5}deg)`,
-              transition: "transform 0.1s ease-out",
+              transform: isMobile
+                ? `perspective(1200px) rotateX(${(scrollPosition * 0.1) % 10}deg)`
+                : `perspective(1200px) rotateX(${mousePosition.y * 0.5}deg) rotateY(${mousePosition.x * -0.5}deg)`,
+              transition: isMobile ? "none" : "transform 0.1s ease-out",
             }}
           >
             {/* Image */}
