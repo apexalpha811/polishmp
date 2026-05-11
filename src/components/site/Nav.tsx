@@ -73,7 +73,7 @@ export function Nav() {
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="text-base text-foreground/80 stagger-item-mobile"
+                className="text-base text-foreground/80 animate-mobile-fade-in-up"
                 style={{ animationDelay: `${idx * 50}ms` }}
               >
                 {l.label}
