@@ -1,0 +1,412 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-espresso: var(--espresso);
+  --color-cream: var(--cream);
+  --color-gold: var(--gold);
+  --color-rose: var(--rose);
+  --color-neon-gold: var(--neon-gold);
+  --font-serif: "Cormorant Garamond", "Playfair Display", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.5rem;
+  /* TWEAKABLE: Main color palette */
+  --background: oklch(0.972 0.014 85);          /* warm cream */
+  --foreground: oklch(0.22 0.025 50);            /* deep espresso */
+  --cream: oklch(0.972 0.014 85);
+  --espresso: oklch(0.22 0.025 50);
+  --gold: oklch(0.72 0.11 78);                   /* muted antique gold */
+  --rose: oklch(0.65 0.15 30);                   /* deeper rose/mauve */
+  --neon-gold: oklch(0.75 0.16 85);              /* brighter neon gold */
+
+  /* TWEAKABLE: Card colors */
+  --card: oklch(0.985 0.008 85);
+  --card-foreground: oklch(0.22 0.025 50);
+  --popover: oklch(0.985 0.008 85);
+  --popover-foreground: oklch(0.22 0.025 50);
+
+  /* TWEAKABLE: Primary & secondary */
+  --primary: oklch(0.72 0.11 78);                /* gold */
+  --primary-foreground: oklch(0.22 0.025 50);
+  --secondary: oklch(0.93 0.018 75);
+  --secondary-foreground: oklch(0.22 0.025 50);
+
+  /* TWEAKABLE: Muted & accent */
+  --muted: oklch(0.93 0.018 75);
+  --muted-foreground: oklch(0.45 0.02 60);
+  --accent: oklch(0.68 0.12 25);                 /* deeper rose accent */
+  --accent-foreground: oklch(0.22 0.025 50);
+
+  --destructive: oklch(0.55 0.2 27);
+  --destructive-foreground: oklch(0.98 0 0);
+
+  /* TWEAKABLE: Borders & inputs */
+  --border: oklch(0.88 0.018 75);
+  --input: oklch(0.88 0.018 75);
+  --ring: oklch(0.72 0.11 78);
+
+  /* TWEAKABLE: Gradients & shadows */
+  --gradient-luxe: linear-gradient(135deg, oklch(0.78 0.09 78), oklch(0.65 0.13 60));
+  --gradient-rose: linear-gradient(135deg, oklch(0.72 0.11 78) 0%, oklch(0.68 0.12 25) 100%);
+  --gradient-glow: linear-gradient(135deg, rgba(184, 134, 11, 0.4), rgba(205, 92, 92, 0.2));
+  --shadow-elegant: 0 30px 80px -30px color-mix(in oklab, var(--espresso) 35%, transparent);
+  --shadow-soft: 0 10px 40px -20px color-mix(in oklab, var(--espresso) 20%, transparent);
+  --shadow-glow: 0 0 40px -10px color-mix(in oklab, var(--gold) 40%, transparent);
+  --shadow-neon: 0 0 20px 0px rgba(184, 134, 11, 0.3);
+
+  /* TWEAKABLE: Animation speeds */
+  --anim-fast: 0.3s;
+  --anim-normal: 0.6s;
+  --anim-slow: 1s;
+}
+
+.dark {
+  --background: oklch(0.18 0.02 50);
+  --foreground: oklch(0.96 0.012 85);
+  --card: oklch(0.22 0.025 50);
+  --card-foreground: oklch(0.96 0.012 85);
+  --popover: oklch(0.22 0.025 50);
+  --popover-foreground: oklch(0.96 0.012 85);
+  --primary: oklch(0.78 0.11 78);
+  --primary-foreground: oklch(0.18 0.02 50);
+  --secondary: oklch(0.28 0.025 50);
+  --secondary-foreground: oklch(0.96 0.012 85);
+  --muted: oklch(0.28 0.025 50);
+  --muted-foreground: oklch(0.72 0.02 60);
+  --accent: oklch(0.72 0.12 25);
+  --accent-foreground: oklch(0.96 0.012 85);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.78 0.11 78);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* ========== KEYFRAME ANIMATIONS ========== */
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes float-delayed {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: var(--shadow-neon); }
+  50% { box-shadow: 0 0 30px 5px rgba(184, 134, 11, 0.5); }
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+@keyframes bounce-in {
+  0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes rotate-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse-scale {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes underline-expand {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* ========== UTILITY ANIMATIONS ========== */
+.reveal {
+  opacity: 0;
+}
+
+.reveal.is-visible {
+  animation: reveal-up 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out both;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 3.5s ease-in-out infinite 0.5s;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.animate-gradient-shift {
+  background-size: 200% 200%;
+  animation: gradient-shift 4s ease infinite;
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.6s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.6s ease-out;
+}
+
+.animate-rotate-slow {
+  animation: rotate-slow 20s linear infinite;
+}
+
+.animate-pulse-scale {
+  animation: pulse-scale 2s ease-in-out infinite;
+}
+
+/* ========== HOVER EFFECTS ========== */
+.hover-scale {
+  transition: transform var(--anim-fast) ease, box-shadow var(--anim-fast) ease;
+}
+
+.hover-scale:hover {
+  transform: translateY(-3px);
+}
+
+.hover-glow {
+  transition: all var(--anim-fast) ease;
+}
+
+.hover-glow:hover {
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-4px);
+}
+
+.hover-lift {
+  transition: all var(--anim-fast) ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px -10px color-mix(in oklab, var(--espresso) 30%, transparent);
+}
+
+.hover-shift {
+  transition: all var(--anim-fast) ease;
+  background-position: 0 0;
+  background-size: 200% auto;
+}
+
+.hover-shift:hover {
+  transform: translateY(-2px);
+}
+
+.group .hover-shift:hover {
+  transform: translateY(-2px);
+}
+
+.interactive-element {
+  cursor: pointer;
+  transition: all var(--anim-fast) ease;
+  position: relative;
+}
+
+.interactive-element:hover {
+  transform: scale(1.02);
+}
+
+.interactive-element:active {
+  transform: scale(0.98);
+}
+
+/* ========== GLASS MORPHISM & MODERN EFFECTS ========== */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.gradient-border {
+  background: linear-gradient(var(--background), var(--background)) padding-box,
+              linear-gradient(135deg, var(--gold), var(--accent)) border-box;
+  border: 2px solid transparent;
+}
+
+.glow-text {
+  text-shadow: 0 0 20px rgba(184, 134, 11, 0.3);
+  color: var(--foreground);
+}
+
+.neon-text {
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
+}
+
+/* ========== STAGGER ANIMATIONS ========== */
+.stagger-item {
+  animation: reveal-up 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+}
+
+.stagger-item:nth-child(1) { animation-delay: 0.1s; }
+.stagger-item:nth-child(2) { animation-delay: 0.2s; }
+.stagger-item:nth-child(3) { animation-delay: 0.3s; }
+.stagger-item:nth-child(4) { animation-delay: 0.4s; }
+.stagger-item:nth-child(5) { animation-delay: 0.5s; }
+.stagger-item:nth-child(6) { animation-delay: 0.6s; }
+
+/* ========== BUTTON EFFECTS ========== */
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+  transition: all var(--anim-fast) ease;
+  box-shadow: var(--shadow-neon);
+}
+
+.btn-glow:hover {
+  box-shadow: 0 0 30px 5px rgba(184, 134, 11, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-glow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-glow:hover::before {
+  left: 100%;
+}
+
+/* ========== PARALLAX & DEPTH ========== */
+.parallax-container {
+  perspective: 1000px;
+  overflow: hidden;
+}
+
+.parallax-element {
+  transform-origin: center;
+  will-change: transform;
+}
+
+/* ========== BORDERS & LINES ========== */
+.border-gradient {
+  border-image: linear-gradient(135deg, var(--gold) 0%, var(--accent) 100%) 1;
+}
+
+/* ========== RESPONSIVE UTILITIES ========== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* TWEAKABLE: Global animation speed control */
+:root {
+  --global-speed: 1;
+}
+
+.slow-animations {
+  --global-speed: 1.5;
+}
+
+.fast-animations {
+  --global-speed: 0.7;
+}
